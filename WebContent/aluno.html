@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html ng-app="alunoModule">
+<head>
+	<meta-charset="utf-8">
+	<title>Aluno</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<script src="js/angular.min.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/ui-bootstrap-tpls-0.14.1.min.js"></script>
+	<script src="control/alunoControl.js"></script>
+</head>
+<body ng-controller="alunoControl">
+	<div ng-include="'menu.html'"></div>
+	<div class="panel panel-default">
+	
+		<div class="panel-heading">Cadastro de Aluno</div>
+		<div class="panel-body">
+			<div>
+			  <!-- Nav tabs -->
+			  <ul class="nav nav-tabs" role="tablist">
+			    <li role="presentation" class="active">
+			    	<a href="#cadastro" aria-controls="cadastro" role="tab" data-toggle="tab">Cadastro</a>
+			    </li>
+			    <li role="presentation">
+			    	<a href="#dados" aria-controls="dados" role="tab" data-toggle="tab">Dados</a>
+			    </li>
+			  </ul>
+			  <!-- Tab panes -->
+			  <div class="tab-content">
+			    <div role="tabpanel" class="tab-pane active" id="cadastro">					
+			    	<form name="pessoaForm" class="css-form">
+			    		<br>
+						<span ng-repeat="mensagem in mensagens">{{mensagem}}<br></span>  				
+						<br>
+						<button type="button" class="btn btn-info" ng-click="novo()">Novo</button>
+						<button type="button" class="btn btn-primary" ng-click="alterar()">Alterar</button>
+						<button type="submit" class="btn btn-success" ng-click="salvar()">Salvar</button>
+						<button type="button" class="btn btn-warning" ng-click="pesquisar()">Pesquisar</button>
+						<hr/>
+					  <div class="form-group col-xs-2">
+					  	<label>Código</label>
+					    <input type="number" disabled="true" class="form-control" ng-model="aluno.codigo" placeholder="Código">
+					  </div>
+					  
+					  <div class="form-group col-xs-4">
+					  	<label>Nome</label>
+					    <input type="text" class="form-control" ng-model="aluno.nome" name="nome" placeholder="Nome" required="" />
+					  </div>
+					  
+					  <div class="form-group col-xs-2">
+					  <label>Sexo</label>
+					  <br>
+					    <!-- <label class="radio-inline"> -->
+						  <input type="radio" name="inlineRadioOptions" id="sexoM" value="M" ng-model="aluno.sexo"> Masculino
+				<!-- 		</label>
+						<label class="radio-inline"> -->
+						  <input type="radio" name="inlineRadioOptions" id="sexoF" value="F" ng-model="aluno.sexo"> Feminino
+				<!-- 		</label> -->
+					  </div>
+					  
+					  <div class="form-group col-xs-8">
+<!-- 					    <select class="form-control" ng-model="selected">
+					    	<option value="0">Selecione um curso</option>
+					    	<option ng-repeat="curso in cursos" value="{{curso.codigo}}">{{curso.nome}}</option>
+						</select> -->
+						<label>Curso</label>
+						<select class="form-control" ng-options="curso as curso.nome for curso in cursos track by curso.codigo" ng-model="selected"></select>
+					  </div>
+					  
+					  					  					  
+				</div>
+			    <div role="tabpanel" class="tab-pane" id="dados">
+				<br>
+				<input type="text" class="form-control" ng-model="criterio" 
+				placeholder="O que voce esta procurando?" /><br>
+			    	<table class="table table-hover">
+			    		<th>Código</th>
+			    		<th>Nome</th>
+			    		<th>Sexo</th>
+			    		<th>Curso</th>
+
+			    		<tr ng-repeat="alunoSelecionado in alunos | filter:criterio" ng-click="seleciona(alunoSelecionado);">
+			    			<td>{{alunoSelecionado.codigo}}</td>
+			    			<td>{{alunoSelecionado.nome}}</td>
+			    			<td>{{alunoSelecionado.sexo == 'M' ? 'Masculino' : 'Feminino'}}</td>
+			    			<td>{{alunoSelecionado.curso.nome}}</td>
+			    		</tr>
+					</table>
+			    </div>
+			  </div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
