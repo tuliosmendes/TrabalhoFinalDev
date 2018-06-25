@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html ng-app="perfilAlunoModule">
+<head>
+	<meta-charset="utf-8">
+	<title>Perfil Aluno</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<script src="js/angular.min.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/ui-bootstrap-tpls-0.14.1.min.js"></script>
+	<script src="control/perfilAlunoControl.js"></script>
+</head>
+<body ng-controller="perfilAlunoControl">
+	<div ng-include="'menu.html'"></div>
+	<div class="panel panel-default">
+	
+		<div class="panel-heading">Cadastro Perfil Aluno</div>
+		<div class="panel-body">
+			<div>
+			  <!-- Nav tabs -->
+			  <ul class="nav nav-tabs" role="tablist">
+			    <li role="presentation" class="active">
+			    	<a href="#cadastro" aria-controls="cadastro" role="tab" data-toggle="tab">Cadastro</a>
+			    </li>
+			    <li role="presentation">
+			    	<a href="#dados" aria-controls="dados" role="tab" data-toggle="tab">Dados</a>
+			    </li>
+			  </ul>
+			  <!-- Tab panes -->
+			  <div class="tab-content">
+			    <div role="tabpanel" class="tab-pane active" id="cadastro">					
+			    	<form name="pessoaForm" class="css-form">
+			    		<br>
+						<span ng-repeat="mensagem in mensagens">{{mensagem}}<br></span>  				
+						<br>
+						<button type="button" class="btn btn-info" ng-click="novo()">Novo</button>
+						<button type="button" class="btn btn-primary" ng-click="alterar()">Alterar</button>
+						<button type="submit" class="btn btn-success" ng-click="salvar()">Salvar</button>
+						<button type="button" class="btn btn-warning" ng-click="pesquisar()">Pesquisar</button>
+						<hr/>
+					
+					<div class="form-group col-xs-4">
+						<label>Aluno</label>
+						<select class="form-control" ng-options="aluno as aluno.nome for aluno in alunos track by aluno.codigo" 
+								ng-model="selected" ng-change="onChangeAluno()"></select>
+					</div>
+					 
+					<div class="form-group col-xs-8">
+					  	<label>Curso</label>
+					    <input type="text" disabled="true" class="form-control" ng-model="perfilAluno.aluno.curso.nome" >
+					</div>
+					  
+					<div class="form-group col-xs-4">
+					  <label>Trabalha na Área?</label>
+					  <br>
+						  <input type="radio" name="inlineRadioOptions" id="trabalhaAreaS" value="1" ng-model="perfilAluno.trabalhaNaArea"> Sim
+						  <input type="radio" name="inlineRadioOptions" id="trabalhaAreaN" value="0" ng-model="perfilAluno.trabalhaNaArea"> Não
+					</div>
+						
+					<div class="form-group col-xs-4">
+						<label>Área</label>
+						<select class="form-control" ng-options="area as area.nome for area in areas track by area.codigo" 
+								ng-model="selectedArea"></select>
+					 </div>
+					 
+					 <div class="form-group col-xs-4">
+					  <label>Objetivo do Curso</label>
+					  <br>
+						  <input type="radio" name="inlineRadioOptionsObjCurso" id="objCursoNet" 
+						  value="NETWORK" ng-model="perfilAluno.objetivoCurso"> Network
+						  <input type="radio" name="inlineRadioOptionsObjCurso" id="objCursoAmp" 
+						  value="AMPLIAR_CONHECIMENTOS" ng-model="perfilAluno.objetivoCurso"> AMPLIAR CONHECIMENTOS
+					</div>
+					  				  
+				</div>
+			    <div role="tabpanel" class="tab-pane" id="dados">
+				<br>
+				<input type="text" class="form-control" ng-model="criterio" 
+				placeholder="O que voce esta procurando?" /><br>
+			    	<table class="table table-hover">
+			    		<th>Nome</th>
+			    		<th>Curso</th>
+			    		<th>Trabalha na área?</th>
+			    		<th>Área</th>
+			    		<th>Objetivo do curso</th>
+
+			    		<tr ng-repeat="perfil in perfilAlunos | filter:criterio" ng-click="seleciona(perfil);">
+			    			<td>{{perfil.aluno.nome}}</td>
+			    			<td>{{perfil.aluno.curso.nome}}</td>
+			    			<td>{{perfil.trabalhaNaArea == true ? 'Sim' : 'Não'}}</td>
+			    			<td>{{perfil.area.nome}}</td>
+			    			<td>{{perfil.objetivoCurso}}</td>
+			    		</tr>
+					</table>
+			    </div>
+			  </div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

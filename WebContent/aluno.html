@@ -51,19 +51,11 @@
 					  <div class="form-group col-xs-2">
 					  <label>Sexo</label>
 					  <br>
-					    <!-- <label class="radio-inline"> -->
 						  <input type="radio" name="inlineRadioOptions" id="sexoM" value="M" ng-model="aluno.sexo"> Masculino
-				<!-- 		</label>
-						<label class="radio-inline"> -->
 						  <input type="radio" name="inlineRadioOptions" id="sexoF" value="F" ng-model="aluno.sexo"> Feminino
-				<!-- 		</label> -->
 					  </div>
 					  
 					  <div class="form-group col-xs-8">
-<!-- 					    <select class="form-control" ng-model="selected">
-					    	<option value="0">Selecione um curso</option>
-					    	<option ng-repeat="curso in cursos" value="{{curso.codigo}}">{{curso.nome}}</option>
-						</select> -->
 						<label>Curso</label>
 						<select class="form-control" ng-options="curso as curso.nome for curso in cursos track by curso.codigo" ng-model="selected"></select>
 					  </div>
