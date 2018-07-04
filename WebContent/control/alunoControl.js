@@ -16,11 +16,64 @@ app.controller('alunoControl',function($scope,$http){
 		 });
 	}
 	
-	var urlSalvarCurso = urlPadrao + "rs/aluno/";
+	
 	
 	$scope.salvar = function() {
-		$scope.novo();
+		if (isValidSave()) {
+			var urlSalvarCurso = urlPadrao + "rs/aluno/";
+			var param = $scope.aluno;
+			param.curso = $scope.selected;
+			salvarAluno(urlSalvarCurso, param);
+		}
+	}
+	
+	function isValidSave() {
+		var valido = true;
+		$scope.mensagens = [];
+		
+		if ($scope.aluno == undefined) {
+			$scope.mensagens.push('Preencha o nome');
+			$scope.mensagens.push('Preencha o sexo');
+			valido = false;
+		}
+		
+		if ($scope.aluno != undefined && $scope.aluno.nome == undefined) {			
+			$scope.mensagens.push('Preencha o nome');
+			valido = false;
+		}
+		
+		if ($scope.aluno != undefined && $scope.aluno.sexo == undefined) {			
+			$scope.mensagens.push('Preencha o sexo');
+			valido = false;
+		}
+		
+		if ($scope.selected == undefined) {			
+			$scope.mensagens.push('Preencha o curso');
+			valido = false;
+		}
+		
+		return valido;
+	}
+	
+	function salvarAluno(urlSalvarAluno, obj) {
+		 $.ajax({
+		  type : 'POST',
+		  contentType : 'application/json',
+		  url : urlSalvarAluno,
+		  dataType : "json",
+		  data : JSON.stringify(obj),
+		  success : callbackSucessSave,
+		  error : function(jqXHR, textStatus, errorThrown) {
+			  alert('Erro ao salvar aluno: ' + jqXHR.responseText);
+		  }
+		 });
+	}
+	
+	function callbackSucessSave() {
+		$scope.mensagens = [];
 		$scope.mensagens.push('Aluno salvo com sucesso!');
+		$scope.buscarAlunos();
+		limpar();
 	}
 	
 	var urlBuscarAlunos = urlPadrao + "rs/aluno";
@@ -39,6 +92,7 @@ app.controller('alunoControl',function($scope,$http){
 		
 		 $http.get(urlPesquisarAluno).success(function (alunosRetorno) {
 			 if (alunosRetorno.length == 0) {
+				 $scope.mensagens = [];
 				 $scope.mensagens.push('Nao encontrado registros para sua busca');
 			 } else {
 				 $scope.aluno = alunosRetorno[0];
@@ -55,6 +109,11 @@ app.controller('alunoControl',function($scope,$http){
 	$scope.novo = function(){
 		$scope.aluno = {};
 		$scope.mensagens = [];
+		$scope.selected = undefined;
+	}
+	
+	function limpar() {
+		$scope.aluno = {};
 		$scope.selected = undefined;
 	}
 	

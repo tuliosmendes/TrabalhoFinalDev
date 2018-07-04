@@ -29,12 +29,11 @@
 			  <!-- Tab panes -->
 			  <div class="tab-content">
 			    <div role="tabpanel" class="tab-pane active" id="cadastro">					
-			    	<form name="pessoaForm" class="css-form">
+			    	<form name="alunoForm" class="css-form" ng-submit="alunoForm.$valid" novalidate>
 			    		<br>
-						<span ng-repeat="mensagem in mensagens">{{mensagem}}<br></span>  				
+						<span ng-repeat="mensagem in mensagens">{{mensagem}}<br></span>  			
 						<br>
 						<button type="button" class="btn btn-info" ng-click="novo()">Novo</button>
-						<button type="button" class="btn btn-primary" ng-click="alterar()">Alterar</button>
 						<button type="submit" class="btn btn-success" ng-click="salvar()">Salvar</button>
 						<button type="button" class="btn btn-warning" ng-click="pesquisar()">Pesquisar</button>
 						<hr/>
@@ -51,13 +50,13 @@
 					  <div class="form-group col-xs-2">
 					  <label>Sexo</label>
 					  <br>
-						  <input type="radio" name="inlineRadioOptions" id="sexoM" value="M" ng-model="aluno.sexo"> Masculino
-						  <input type="radio" name="inlineRadioOptions" id="sexoF" value="F" ng-model="aluno.sexo"> Feminino
+						  <input type="radio" name="inlineRadioOptions" id="sexoM" value="M" ng-model="aluno.sexo" required="required"> Masculino
+						  <input type="radio" name="inlineRadioOptions" id="sexoF" value="F" ng-model="aluno.sexo" required="required"> Feminino
 					  </div>
 					  
 					  <div class="form-group col-xs-8">
 						<label>Curso</label>
-						<select class="form-control" ng-options="curso as curso.nome for curso in cursos track by curso.codigo" ng-model="selected"></select>
+						<select class="form-control" ng-options="curso as curso.nome for curso in cursos track by curso.codigo" ng-model="selected" required="required"></select>
 					  </div>
 					  
 					  					  					  
