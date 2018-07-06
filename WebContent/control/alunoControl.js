@@ -20,10 +20,10 @@ app.controller('alunoControl',function($scope,$http){
 	
 	$scope.salvar = function() {
 		if (isValidSave()) {
-			var urlSalvarCurso = urlPadrao + "rs/aluno/";
+			var urlSalvarAluno = urlPadrao + "rs/aluno/";
 			var param = $scope.aluno;
 			param.curso = $scope.selected;
-			salvarAluno(urlSalvarCurso, param);
+			salvarAluno(urlSalvarAluno, param);
 		}
 	}
 	

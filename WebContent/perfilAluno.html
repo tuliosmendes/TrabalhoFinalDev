@@ -29,7 +29,7 @@
 			  <!-- Tab panes -->
 			  <div class="tab-content">
 			    <div role="tabpanel" class="tab-pane active" id="cadastro">					
-			    	<form name="pessoaForm" class="css-form">
+			    	<form name="perfilAlunoForm" class="css-form" ng-submit="perfilAlunoForm.$valid" novalidate>
 			    		<br>
 						<span ng-repeat="mensagem in mensagens">{{mensagem}}<br></span>  				
 						<br>
@@ -53,8 +53,8 @@
 					<div class="form-group col-xs-4">
 					  <label>Trabalha na Área?</label>
 					  <br>
-						  <input type="radio" name="inlineRadioOptions" id="trabalhaAreaS" value="1" ng-model="perfilAluno.trabalhaNaArea"> Sim
-						  <input type="radio" name="inlineRadioOptions" id="trabalhaAreaN" value="0" ng-model="perfilAluno.trabalhaNaArea"> Não
+						  <input type="radio" name="inlineRadioOptions" id="trabalhaAreaS" value="true" ng-model="perfilAluno.trabalhaNaArea"> Sim
+						  <input type="radio" name="inlineRadioOptions" id="trabalhaAreaN" value="false" ng-model="perfilAluno.trabalhaNaArea"> Não
 					</div>
 						
 					<div class="form-group col-xs-4">
