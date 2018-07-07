@@ -33,10 +33,10 @@
 			    		<br>
 						<span ng-repeat="mensagem in mensagens">{{mensagem}}<br></span>  				
 						<br>
-						<button type="button" class="btn btn-info" ng-click="novo()">Novo</button>
-						<button type="button" class="btn btn-primary" ng-click="alterar()">Alterar</button>
-						<button type="submit" class="btn btn-success" ng-click="salvar()">Salvar</button>
-						<button type="button" class="btn btn-warning" ng-click="pesquisar()">Pesquisar</button>
+						<button id="btnNovo" type="button" class="btn btn-info" ng-click="novo()" ng-disabled="disabledNovo">Novo</button>
+						<button type="button" class="btn btn-primary" ng-click="alterar()" ng-disabled="disabledAlterar">Alterar</button>
+						<button type="submit" class="btn btn-success" ng-click="salvar()" ng-disabled="disabledSalvar">Salvar</button>
+						<button type="button" class="btn btn-warning" ng-click="pesquisar()" ng-disabled="disabledPesquisar">Pesquisar</button>
 						<hr/>
 					
 					<div class="form-group col-xs-4">

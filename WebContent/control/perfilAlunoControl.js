@@ -6,6 +6,9 @@ app.controller('perfilAlunoControl',function($scope,$http){
 	$scope.perfilAluno = {};
 	$scope.perfilAluno.aluno = {};
 	$scope.perfilAluno.aluno.curso = {};
+
+	$scope.disabledAlterar = true;
+	$scope.disabledPesquisar = true;
 	
 	var urlPadrao = "http://localhost:8080/perfil-alunos-ti-iftm/";
 
@@ -57,13 +60,25 @@ app.controller('perfilAlunoControl',function($scope,$http){
 		$scope.selectedArea = undefined;
 	}
 	
+	$scope.alterar = function() {
+		updateOrSave('alter');
+	}
+	
 	$scope.salvar = function() {
+		updateOrSave('save');
+	}
+	
+	function updateOrSave(str) {
 		if (isValidSave()) {
-			var urlSalvarPerfilAluno = urlPadrao + "rs/perfilAluno/";
+			var urlRest = urlPadrao + "rs/perfilAluno/";
 			var param = $scope.perfilAluno;
 			param.area = $scope.selectedArea;
 			param.aluno = $scope.selected;
-			salvarPerfilAluno(urlSalvarPerfilAluno, param);
+			
+			if (str == 'alter')
+				alterarPerfilAluno(urlRest, param);
+			else
+				salvarPerfilAluno(urlRest, param);
 		}
 	}
 	
@@ -96,16 +111,30 @@ app.controller('perfilAlunoControl',function($scope,$http){
 		return valido;
 	}
 	
-	function salvarPerfilAluno(urlSalvarPerfilAluno, obj) {
+	function salvarPerfilAluno(url, obj) {
 		 $.ajax({
 		  type : 'POST',
 		  contentType : 'application/json',
-		  url : urlSalvarPerfilAluno,
+		  url : url,
 		  dataType : "json",
 		  data : JSON.stringify(obj),
 		  success : callbackSucessSave,
 		  error : function(jqXHR, textStatus, errorThrown) {
 			  alert('Erro ao salvar perfil aluno: ' + jqXHR.responseText);
+		  }
+		 });
+	}
+	
+	function alterarPerfilAluno(url, obj) {
+		 $.ajax({
+		  type : 'PUT',
+		  contentType : 'application/json',
+		  url : url,
+		  dataType : "json",
+		  data : JSON.stringify(obj),
+		  success : callbackSucessAlter,
+		  error : function(jqXHR, textStatus, errorThrown) {
+			  alert('Erro ao alterar perfil aluno: ' + jqXHR.responseText);
 		  }
 		 });
 	}
@@ -117,7 +146,19 @@ app.controller('perfilAlunoControl',function($scope,$http){
 		limpar();
 	}
 	
+	function callbackSucessAlter() {
+		$scope.mensagens = [];
+		$scope.mensagens.push('Perfil Aluno atualizado com sucesso!');
+		$scope.buscarPerfilAlunos();
+		limpar();
+		$scope.disabledSalvar = false;
+		$scope.disabledAlterar = true;
+		$scope.disabledPesquisar = true;
+	}
+	
 	$scope.pesquisar = function(){
+		$scope.disabledSalvar = true;
+		$scope.disabledAlterar = false;
 		var param = $scope.selected.codigo;
 		var urlPesquisarPerfilAluno = urlPadrao + "rs/perfilAluno/" + param;
 		
@@ -144,6 +185,7 @@ app.controller('perfilAlunoControl',function($scope,$http){
 	
 	$scope.onChangeAluno = function () {
 		$scope.perfilAluno.aluno.curso.nome = $scope.selected.curso.nome;
+		$scope.disabledPesquisar = false;
 	};
 	
 });
